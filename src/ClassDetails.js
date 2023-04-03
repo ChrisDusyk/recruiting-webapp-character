@@ -3,7 +3,7 @@ import './ClassDetails.css';
 function ClassDetails({ classInfo }) {
     return (
         <div className='listContainer'>
-            {classInfo && Object.entries(classInfo).map(([key, value]) => <span className='classList' key={key}>{`${key}: ${value}`}</span>)}
+            {classInfo && Object.entries(classInfo).map(([key, value]) => <span className='classListItem' key={key}>{`${key}: ${value}`}</span>)}
         </div>
     );
 }
