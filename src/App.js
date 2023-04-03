@@ -23,7 +23,7 @@ function App() {
   const handleAttributeChange = (attribute, value) => {
     const newAttributeValues = attributes.map(att => att.key === attribute ? { ...att, value, modifier: calculateAttributeModifier(value) } : att)
     const totalPointsSpent = newAttributeValues.map(att => att.value).reduce((x, y) => x + y);
-    if (totalPointsSpent <= 70)
+    if (totalPointsSpent <= MAX_ATTRIBUTE_POINTS)
       setAttributes(newAttributeValues);
   }
 
