@@ -6,6 +6,8 @@ import AttributeControl from './AttributeControl';
 import ClassDetails from './ClassDetails';
 import SkillListItem from './SkillListItem';
 
+const API_URL = 'https://recruiting.verylongdomaintotestwith.ca/api/ChrisDusyk/character'
+
 const attributeSeed = ATTRIBUTE_LIST.map(att => ({ key: att, value: 10, modifier: 0 }));
 const classList = Object.keys(CLASS_LIST);
 const skillSeed = SKILL_LIST.map(skill => ({ key: skill.name, points: 0, attribute: skill.attributeModifier}))
@@ -27,6 +29,24 @@ function App() {
 
   const handleClassSelection = (className) => {
     setSelectedClass(CLASS_LIST[className]);
+  }
+
+  const handleSave = () => {
+    fetch(API_URL, { 
+      method: 'POST',
+      body: JSON.stringify({ attributes, skills, selectedClass }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  const handleLoad = async () => {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    setAttributes(data.body.attributes);
+    setSkills(data.body.skills);
+    setSelectedClass(data.body.selectedClass);
   }
 
   const doAttributesMeetClassRequirements = (className) => {
@@ -57,6 +77,8 @@ function App() {
         <>
           {skills.map(skill => <SkillListItem key={skill.key} attributes={attributes} skill={skill} setValue={handleSkillChange} />)}
         </>
+        <button type='submit' onClick={handleSave}>Save</button>
+        <button onClick={handleLoad}>Load</button>
       </section>
     </div>
   );
