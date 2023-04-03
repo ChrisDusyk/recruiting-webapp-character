@@ -44,3 +44,21 @@
     transform: rotate(360deg);
   }
 }
+
+.btn {
+  border: none;
+  background-color: inherit;
+  padding: 5px 12px;
+  display: inline-block;
+  color: white;
+  cursor: pointer;
+}
+
+.invalidClass {
+  border: none;
+  background-color: inherit;
+  padding: 5px 12px;
+  display: inline-block;
+  color: red;
+  cursor: pointer;
+}
