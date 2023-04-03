@@ -5,15 +5,17 @@ import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts.js';
 import AttributeControl from './AttributeControl';
 import ClassDetails from './ClassDetails';
 
-const attributeSeed = ATTRIBUTE_LIST.map(att => ({ key: att, value: 10 }));
+const attributeSeed = ATTRIBUTE_LIST.map(att => ({ key: att, value: 10, modifier: 0 }));
 const classList = Object.keys(CLASS_LIST);
+
+const calculateAttributeModifier = (value) => Math.floor((value - 10) / 2);
 
 function App() {
   const [attributes, setAttributes] = useState(attributeSeed);
   const [selectedClass, setSelectedClass] = useState(undefined);
 
   const handleAttributeChange = (attribute, value) => {
-    setAttributes(attributes.map(att => att.key === attribute ? { ...att, value } : att));
+    setAttributes(attributes.map(att => att.key === attribute ? { ...att, value, modifier: calculateAttributeModifier(value) } : att));
   }
 
   const handleClassSelection = (className) => {
