@@ -7,6 +7,7 @@ import ClassDetails from './ClassDetails';
 import SkillListItem from './SkillListItem';
 
 const API_URL = 'https://recruiting.verylongdomaintotestwith.ca/api/ChrisDusyk/character'
+const MAX_ATTRIBUTE_POINTS = 70;
 
 const attributeSeed = ATTRIBUTE_LIST.map(att => ({ key: att, value: 10, modifier: 0 }));
 const classList = Object.keys(CLASS_LIST);
@@ -20,7 +21,10 @@ function App() {
   const [skills, setSkills] = useState(skillSeed);
 
   const handleAttributeChange = (attribute, value) => {
-    setAttributes(attributes.map(att => att.key === attribute ? { ...att, value, modifier: calculateAttributeModifier(value) } : att));
+    const newAttributeValues = attributes.map(att => att.key === attribute ? { ...att, value, modifier: calculateAttributeModifier(value) } : att)
+    const totalPointsSpent = newAttributeValues.map(att => att.value).reduce((x, y) => x + y);
+    if (totalPointsSpent <= 70)
+      setAttributes(newAttributeValues);
   }
 
   const handleSkillChange = (skill, value) => {
