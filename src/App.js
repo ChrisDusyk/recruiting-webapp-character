@@ -4,18 +4,25 @@ import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts.js';
 
 import AttributeControl from './AttributeControl';
 import ClassDetails from './ClassDetails';
+import SkillListItem from './SkillListItem';
 
 const attributeSeed = ATTRIBUTE_LIST.map(att => ({ key: att, value: 10, modifier: 0 }));
 const classList = Object.keys(CLASS_LIST);
+const skillSeed = SKILL_LIST.map(skill => ({ key: skill.name, points: 0, attribute: skill.attributeModifier}))
 
 const calculateAttributeModifier = (value) => Math.floor((value - 10) / 2);
 
 function App() {
   const [attributes, setAttributes] = useState(attributeSeed);
   const [selectedClass, setSelectedClass] = useState(undefined);
+  const [skills, setSkills] = useState(skillSeed);
 
   const handleAttributeChange = (attribute, value) => {
     setAttributes(attributes.map(att => att.key === attribute ? { ...att, value, modifier: calculateAttributeModifier(value) } : att));
+  }
+
+  const handleSkillChange = (skill, value) => {
+    setSkills(skills.map(sk => sk.key === skill ? { ...sk, points: value } : sk));
   }
 
   const handleClassSelection = (className) => {
@@ -45,6 +52,11 @@ function App() {
         <br />
         <ClassDetails classInfo={selectedClass} />
         {attributes.map(att => <AttributeControl key={att.key} label={att.key} value={att.value} setValue={handleAttributeChange} />)}
+        <br />
+        <h3>Skills</h3>
+        <>
+          {skills.map(skill => <SkillListItem key={skill.key} attributes={attributes} skill={skill} setValue={handleSkillChange} />)}
+        </>
       </section>
     </div>
   );
